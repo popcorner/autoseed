@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="google" value="notranslate">
+  <title>Autoseed</title>
+
+  <link href="style/main.css" rel="stylesheet" type="text/css">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="meta/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+<body>
+  <div class="container">
+    <div class="heading">
+      <h1 class="title">Autoseed</h1>
+      <div class="scores-container">
+        <div class="score-container level" id="gamelevel">0</div>
+        <div class="score-container remain" id="clickremain">0</div>
+		<div class="score-container times" id="clicktimes">0</div>
+      </div>
+    </div>
+
+    <div class="above-game">
+      <p class="game-intro">Click tiles to make <strong>all torrents active!</strong></p>
+      <a class="restart-button" onclick="startgame()">New Game</a>
+    </div>
+
+    <div class="game-container game-none" id="gamecontainer">
+      <div class="game-message" id="gamehover">
+        <p id="gametext"></p>
+        <div class="lower">
+	        <a class="keep-playing-button" onclick="nextlevel()">Next level</a>
+          <a class="retry-button" id="sharebutton">Share</a>
+        </div>
+      </div>
+
+      <div class="grid-container">
+        <div class="grid-row">
+          <div class="grid-cell" id="tile11" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile12" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile13" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile14" onclick="clicktile(this)">x</div>
+		  <div class="grid-cell" id="tile15" onclick="clicktile(this)">x</div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell" id="tile21" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile22" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile23" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile24" onclick="clicktile(this)">x</div>
+		  <div class="grid-cell" id="tile25" onclick="clicktile(this)">x</div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell" id="tile31" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile32" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile33" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile34" onclick="clicktile(this)">x</div>
+		  <div class="grid-cell" id="tile35" onclick="clicktile(this)">x</div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell" id="tile41" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile42" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile43" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile44" onclick="clicktile(this)">x</div>
+		  <div class="grid-cell" id="tile45" onclick="clicktile(this)">x</div>
+        </div>
+		<div class="grid-row">
+          <div class="grid-cell" id="tile51" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile52" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile53" onclick="clicktile(this)">x</div>
+          <div class="grid-cell" id="tile54" onclick="clicktile(this)">x</div>
+		  <div class="grid-cell" id="tile55" onclick="clicktile(this)">x</div>
+        </div>
+      </div>
+
+      <div class="tile-container">
+
+      </div>
+    </div>
+
+    <p class="game-explanation">
+      <strong class="important">How to play:</strong> Use your <strong>mouse</strong> to click the tiles and change the torrent's state. of course, the torrents around will be <strong>change at the same time!</strong>
+    </p>
+    <hr>
+    <p>
+    <strong class="important">玩法简介:</strong> 用鼠标点击方块，改变种子的状态，同时四周的种子状态也会发生改变。当所有种子均激活时即获胜。
+    </p>
+    <hr>
+    <p>
+    Created by <a>popcorner</a>. Include <a href="http://gabrielecirulli.github.io/2048/" target="_blank">2048 UI design</a>.
+    </p>
+	<p id="levelcont" style="display:none;"></p>
+  </div>
+  <!---script src="js/common.js"></script----->
+  <script src="js/level.js"></script>
+  <script language="javascript" type="text/javascript">
+function tilecheck(id) {
+return document.getElementById(id);
+}
+function startgame() {
+tilecheck('gamecontainer').className = 'game-container';
+tilecheck('clicktimes').innerHTML = 0;
+loadgame(1);
+}
+function loadgame(level) {
+tilecheck('gamelevel').innerHTML = level;
+var levelcontent = readgame(level);
+if(levelcontent == 1) {
+	tilecheck('gamehover').className = 'game-message game-over';
+	tilecheck('gametext').innerHTML = 'Level complete!';
+	tilecheck('sharebutton').href = 'javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=\'http://v.t.sina.com.cn/share/share.php?\',u=z||d.location,p=[\'url=\',e(u),\'&title=\',e(t||d.title),\'&source=\',e(r),\'&sourceUrl=\',e(l),\'&content=\',c||\'gb2312\',\'&pic=\',e(p||\'\')].join(\'\');function%20a(){if(!window.open([f,p].join(\'\'),\'mb\',[\'toolbar=0,status=0,resizable=1,width=650,height=430,left=\',(s.width-650)/2,\',top=\',(s.height-430)/2].join(\'\')))u.href=[f,p].join(\'\');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,\'\',\'\',\'\',\'我在玩Autoseed，仅用'+tilecheck('clicktimes').innerHTML+'步居！然！通！关！了！！太不可思议了，你要不要来尝试一下？\',\'http://www.dutpt.com\',\'页面编码gb2312|utf-8默认gb2312\'));';
+} else {
+	for(var i=1;i<6;i++) {
+		for(var j=1;j<6;j++) {
+			var levelnum = (i-1)*5+j-1;
+			var tilest = parseInt(levelcontent.substr(levelnum,1))
+			if(tilest == 1) {
+				settile(i,j,1);
+			} else {
+				settile(i,j,0);
+			}
+		}
+	}
+}
+}
+function readgame(level) {
+return text[level];
+}
+function nextlevel() {
+var level = tilecheck('gamelevel').innerHTML;
+level = parseInt(level)+1;
+tilecheck('gamehover').className = 'game-message';
+tilecheck('gametext').innerHTML = '';
+loadgame(level);
+}
+function clicktile(obj) {
+var tileid = obj.id;
+var tiletr = parseInt(tileid.substr(-2,1));
+var tiletd = parseInt(tileid.substr(-1,1));
+var clicktime = tilecheck('clicktimes').innerHTML;
+clicktime++;
+tilecheck('clicktimes').innerHTML = clicktime;
+changetile(tiletr,tiletd);
+var lefttr = tiletr-1;
+var righttr = tiletr+1;
+var uptd = tiletd-1;
+var downtd = tiletd+1;
+changetile(lefttr,tiletd);
+changetile(righttr,tiletd);
+changetile(tiletr,uptd);
+changetile(tiletr,downtd);
+checktile();
+}
+function changetile(tiletr,tiletd) {
+var tileid = 'tile'+tiletr+tiletd;
+if(tilecheck(tileid)) {
+	var tilehtml = tilecheck(tileid).innerHTML;
+	if(tilehtml == 'x') {
+		tilecheck(tileid).innerHTML = 'μ';
+		tilecheck(tileid).className = 'grid-cell grid-active';
+	} else {
+		tilecheck(tileid).innerHTML = 'x';
+		tilecheck(tileid).className = 'grid-cell';
+	}
+}
+}
+function settile(tiletr,tiletd,tstate) {
+var tileid = 'tile'+tiletr+tiletd;
+if(tilecheck(tileid)) {
+	if(tstate == '1') {
+		tilecheck(tileid).innerHTML = 'μ';
+		tilecheck(tileid).className = 'grid-cell grid-active';
+	} else {
+		tilecheck(tileid).innerHTML = 'x';
+		tilecheck(tileid).className = 'grid-cell';
+	}
+}
+}
+function checktile() {
+var tilecount = 0;
+for(var i=1;i<6;i++) {
+	for(var j=1;j<6;j++) {
+		if(tilecheck('tile'+i+j).innerHTML == 'x') {
+			tilecount++;
+		}
+	}
+}
+tilecheck('clickremain').innerHTML = tilecount;
+if(tilecount == 0) {
+	tilecheck('gamehover').className = 'game-message game-won';
+	tilecheck('gametext').innerHTML = 'You win!';
+	tilecheck('sharebutton').href = 'javascript:void((function(s,d,e,r,l,p,t,z,c){var%20f=\'http://v.t.sina.com.cn/share/share.php?\',u=z||d.location,p=[\'url=\',e(u),\'&title=\',e(t||d.title),\'&source=\',e(r),\'&sourceUrl=\',e(l),\'&content=\',c||\'gb2312\',\'&pic=\',e(p||\'\')].join(\'\');function%20a(){if(!window.open([f,p].join(\'\'),\'mb\',[\'toolbar=0,status=0,resizable=1,width=650,height=430,left=\',(s.width-650)/2,\',top=\',(s.height-430)/2].join(\'\')))u.href=[f,p].join(\'\');};if(/Firefox/.test(navigator.userAgent))setTimeout(a,0);else%20a();})(screen,document,encodeURIComponent,\'\',\'\',\'\',\'我在玩Autoseed，仅用'+tilecheck('clicktimes').innerHTML+'步就闯到了第'+tilecheck('gamelevel').innerHTML+'关哦！快来试试吧~\',\'http://www.dutpt.com\',\'页面编码gb2312|utf-8默认gb2312\'));';
+}
+}
+</script>
+
+</body>
+</html>
